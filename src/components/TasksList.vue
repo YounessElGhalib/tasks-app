@@ -5,9 +5,11 @@
     <div class="flex items-center justify-between py-6">
       <p class="text-sm text-gray-600">{{ tasks.length }} Tasks</p>
       <button
-        class="text-sm font-medium text-blue-500 bg-blue-100 rounded-lg border border-blue-300 py-1 px-3 shadow-sm hover:bg-blue-200"
+        class="primary-btn flex items-center space-x-1"
+        @click="openAddModal"
       >
-        New Task
+        <PlusIcon class="w-4 h-4" />
+        <p>New Task</p>
       </button>
     </div>
     <div class="border rounded-lg overflow-hidden border-gray-300 shadow-sm">
@@ -29,24 +31,94 @@
                 {{ task.status }}
               </div>
             </td>
-            <td class="w-1/6">...</td>
+            <td class="w-1/6">
+              <div class="flex items-center justify-center space-x-4">
+                <PencilIcon
+                  class="w-5 h-5 text-gray-600 cursor-pointer"
+                  @click="openUpdateModal(task)"
+                />
+                <TrashIcon
+                  class="w-5 h-5 text-red-600 cursor-pointer"
+                  @click="deleteTask(task)"
+                />
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+  <TaskModal
+    v-show="show_task_modal"
+    :action="action"
+    :task_prop="remeber_task"
+    @closeModal="closeModal"
+  />
+
+  <ConfirmationModal
+    v-show="show_confirmation_modal"
+    :task_prop="remeber_task"
+    @closeModal="closeConfirmationModal"
+  />
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import TaskModal from "./TaskModal.vue";
+import ConfirmationModal from "./ConfirmationModal.vue";
+import { PlusIcon, PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const store = useStore();
-
+const show_task_modal = ref(false);
+const show_confirmation_modal = ref(false);
+const action = ref("Add");
+const remeber_task = ref({});
 
 onMounted(() => {
   store.dispatch("tasks/getTasksList");
 });
+
+function closeModal() {
+  show_task_modal.value = false;
+  action.value = "Add";
+  remeber_task.value = {
+    title: "",
+    schedule: "",
+    status: "",
+  };
+}
+
+function closeConfirmationModal() {
+  show_confirmation_modal.value = false;
+  remeber_task.value = {
+    title: "",
+    schedule: "",
+    status: "",
+  };
+}
+
+function openUpdateModal(task) {
+  show_task_modal.value = true;
+  action.value = "Update";
+  remeber_task.value = task;
+}
+
+function openAddModal() {
+  show_task_modal.value = true;
+  action.value = "Add";
+  remeber_task.value = {
+    title: "",
+    schedule: "",
+    status: "",
+  };
+}
+
+function deleteTask(task) {
+  remeber_task.value = task;
+  show_confirmation_modal.value = true;
+}
 
 const tasks = computed(() => store.state.tasks.tasks_list);
 </script>

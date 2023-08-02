@@ -4,15 +4,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import TasksList from "./components/TasksList.vue";
 
-export default {
-  name: "App",
-  components: {
-    TasksList,
-  },
-};
 </script>
 
 <style>
