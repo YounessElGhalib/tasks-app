@@ -1,33 +1,25 @@
-// initial state
-// shape: [{ id, quantity }]
+import axios from "axios";
+
 const state = () => ({
-  items: [],
-  checkoutStatus: 'youness',
+  tasks_list: [],
 });
 
-// getters
-const getters = {
-  cartTotalPrice: (state, getters) => {
-    return getters.cartProducts.reduce((total, product) => {
-      return total + product.price * product.quantity;
-    }, 0);
-  },
-};
+const getters = {};
 
-// actions
 const actions = {
-  inc() {
-    console.log("hahahah...");
+  getTasksList({ commit }) {
+    axios.get("/api/tasks").then((res) => {
+      commit("setTasks", res.data.tasks);
+    });
   },
 };
 
-// mutations
 const mutations = {
-  pushProductToCart(state, { id }) {
-    state.items.push({
-      id,
-      quantity: 1,
-    });
+  setTasks(state, tasks) {
+    state.tasks_list = tasks;
+  },
+  addNewTask(state, task) {
+    state.tasks_list.push(task);
   },
 };
 

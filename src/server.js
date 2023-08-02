@@ -9,8 +9,9 @@ export function makeServer({ environment = "development" } = {}) {
     },
 
     seeds(server) {
-      server.create("task", { id: 1, name:'taks 1', content: "content of task number 1." });
-      server.create("task", { id: 2, name:'taks 2', content: "content of task number 2." });
+      server.create("task", { id: 1, title:'Implement Preject Management system', schedule: "Sep 13", status: 'Not started' });
+      server.create("task", { id: 2, title:'Create Index Page', schedule: "Aug 1", status: 'In progress' });
+      server.create("task", { id: 3, title:'Design Page Home', schedule: "Jul 1", status: 'Finished' });
     },
 
     routes() {
