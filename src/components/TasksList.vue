@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-12 w-3/5 m-auto">
+  <div class="pt-12 px-4 w-full xl:w-4/6 md:w-10/12 m-auto">
     <h1 class="text-3xl text-gray-600 pb-8">Task List</h1>
 
     <div class="flex items-center justify-between py-6">
@@ -14,33 +14,58 @@
     </div>
     <div class="border rounded-lg overflow-hidden border-gray-300 shadow-sm">
       <table class="w-full">
-        <thead class="bg-blue-50 text-gray-500 font-medium text-base">
+        <thead
+          class="bg-blue-50 hidden md:table-header-group text-gray-500 font-medium text-base"
+        >
           <tr>
-            <td class="w-1/3">Title</td>
-            <td class="w-1/4">Schedule</td>
-            <td class="w-1/4 text-center">Status</td>
-            <td class="w-1/6"></td>
+            <td class="w-5/12">Title</td>
+            <td class="w-1/12">Schedule</td>
+            <td class="w-3/12 text-center">Status</td>
+            <td class="w-3/12"></td>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="task in tasks" :key="task">
-            <td class="w-1/3">{{ task.title }}</td>
-            <td class="w-1/4">{{ task.schedule }}</td>
-            <td class="w-1/4">
-              <div :class="`status-${task.status.replace(/\s/g, '')}`">
-                {{ task.status }}
+          <tr
+            v-for="task in tasks"
+            :key="task"
+            class="flex flex-col md:table-row"
+          >
+            <td class="w-full md:w-5/12">
+              <div class="flex items-center space-x-4 md:space-x-0">
+                <p class="md:hidden">Title :</p>
+                <p>{{ task.title }}</p>
               </div>
             </td>
-            <td class="w-1/6">
-              <div class="flex items-center justify-center space-x-4">
-                <PencilIcon
-                  class="w-5 h-5 text-gray-600 cursor-pointer"
+            <td class="w-full md:w-1/12">
+              <div class="flex items-center space-x-4 md:space-x-0">
+                <p class="md:hidden">Schedule :</p>
+                <p>{{ task.schedule }}</p>
+              </div>
+            </td>
+            <td class="w-full md:w-3/12">
+              <div class="flex items-center md:justify-center space-x-4 md:space-x-0">
+                <p class="md:hidden">Status :</p>
+                <div :class="`status-${task.status.replace(/\s/g, '')}`">
+                  {{ task.status }}
+                </div>
+              </div>
+            </td>
+            <td class="w-full md:w-3/12">
+              <div class="flex items-center justify-center space-x-2">
+                <button
+                  class="cancel-btn flex items-center space-x-1"
                   @click="openUpdateModal(task)"
-                />
-                <TrashIcon
-                  class="w-5 h-5 text-red-600 cursor-pointer"
+                >
+                  <PencilIcon class="w-5 h-5 text-gray-600 cursor-pointer" />
+                  <p>Update</p>
+                </button>
+                <button
+                  class="delete-btn flex items-center space-x-1"
                   @click="deleteTask(task)"
-                />
+                >
+                  <TrashIcon class="w-5 h-5 text-red-600 cursor-pointer" />
+                  <p>Delete</p>
+                </button>
               </div>
             </td>
           </tr>

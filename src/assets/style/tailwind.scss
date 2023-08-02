@@ -22,6 +22,10 @@ label {
     @apply text-sm font-medium text-gray-500 bg-gray-100 rounded-lg border border-gray-300 py-1 px-3 shadow-sm ;
 }
 
+.delete-btn {
+    @apply text-sm font-medium text-red-500 bg-red-100 rounded-lg border border-red-300 py-1 px-3 shadow-sm ;
+}
+
 .cancel-btn:hover {
     @apply bg-gray-200;
 }

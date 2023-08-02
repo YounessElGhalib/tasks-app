@@ -7,7 +7,7 @@
       <div
         class="inline-block align-bottom w-[600px] bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all"
       >
-        <div class="bg-white px-10 py-6 w-3/4">
+        <div class="bg-white px-10 py-6 w-full md:w-3/4">
           <h3 class="text-xl py-4 text-gray-600">{{ action }} Task</h3>
           <div class="pb-4">
             <label>Title</label>
