@@ -3,8 +3,11 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import store from "./store";
 import { makeServer } from "./server";
-
-if (process.env.NODE_ENV === "development") {
+console.log("NODE_ENV -> ", process.env.NODE_ENV);
+if (
+  process.env.NODE_ENV === "development" ||
+  process.env.NODE_ENV === "production"
+) {
   makeServer();
 }
 
